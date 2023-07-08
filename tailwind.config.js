@@ -30,6 +30,10 @@ module.exports = {
                 gray: gray,
                 neutral: gray,
                 cyan: colors.cyan,
+                neutral: {
+                    800: '#212121',
+                    900: '#121212',
+                }
             },
             fontSize: {
                 '2xs': '0.625rem',
