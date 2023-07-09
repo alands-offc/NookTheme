@@ -31,6 +31,14 @@ module.exports = {
                 neutral: gray,
                 cyan: colors.cyan,
                 neutral: {
+                    50: colors.neutral[50],
+                    100: colors.neutral[100],
+                    200: colors.neutral[200],
+                    300: colors.neutral[300],
+                    400: colors.neutral[400],
+                    500: colors.neutral[500],
+                    600: colors.neutral[600],
+                    700: '#17171B',
                     800: '#212121',
                     900: '#121212',
                 }
