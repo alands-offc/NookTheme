@@ -27,14 +27,27 @@
 }
 /* The side navigation menu */
 .sidebar {
+    position: fixed;
     margin: 0;
     padding: 0;
     width: var(--sidebar-size);
     background-color: var(--color-tertiary);
-    position: fixed;
     height: 100%;
     overflow: auto;
     z-index: 999999;
+}
+
+.content-container {
+    margin-left: calc(var(--sidebar-size) + 40px);
+    margin-right: 40px;
+}
+
+.content-dashboard {
+    max-width: 1200px;
+}
+
+.navbar-button {
+    display: none;
 }
 
 /* Sidebar links */
@@ -46,7 +59,7 @@
 }
 
 /* Active/current link */
-.sidebar .active > .icon{
+.sidebar .active > .icon {
     background-color: var(--button-color-active);
     color: white;
 }
@@ -92,12 +105,17 @@ div.content {
     height: 1000px;
 }
 
-/* On screens that are less than 700px wide, make the sidebar into a topbar */
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 1150px) {
     .sidebar {
+        position: fixed;
         width: 100%;
-        left: -700px;
+        left: -1150px;
         transition: all 0.3s ease-in-out;
+    }
+
+    .content-container {
+        margin-left: 40px;
+        margin-right: 40px;
     }
 
     div.content {
@@ -115,6 +133,13 @@ div.content {
 
     .nav-bar {
         display: flex;
+    }
+
+    .navbar-button {
+        display: inline;
+        font-size: 1.5rem;
+        margin-left: 1rem;
+        cursor: pointer;
     }
 }
 
