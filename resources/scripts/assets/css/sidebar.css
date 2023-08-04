@@ -46,14 +46,43 @@
 }
 
 /* Active/current link */
-.sidebar .router-link-active {
+.sidebar .active > .icon{
     background-color: var(--button-color-active);
     color: white;
 }
 
+.sidebar > a {
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.icon {
+    border-radius: 30%;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    background-size: 100px;
+    line-height: 30px;
+    background-color: var(--button-color);
+    color: var(--button-color-text);
+    margin-right: 10px;
+}
+
+.sidebar > a > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Links on mouse-over */
-.sidebar a:hover:not(.router-link-active) {
+.sidebar a:hover:not(.active) > .icon {
     background-color: var(--sidebar-button-color-hover);
+}
+
+.icon {
+    transition: all 0.2s ease-in-out;
 }
 
 /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
