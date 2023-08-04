@@ -1,3 +1,4 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import React, { lazy } from 'react';
 import ServerConsole from '@/components/server/console/ServerConsoleContainer';
 import DatabasesContainer from '@/components/server/databases/DatabasesContainer';
@@ -13,6 +14,19 @@ import AccountApiContainer from '@/components/dashboard/AccountApiContainer';
 import AccountSSHContainer from '@/components/dashboard/ssh/AccountSSHContainer';
 import ActivityLogContainer from '@/components/dashboard/activity/ActivityLogContainer';
 import ServerActivityLogContainer from '@/components/server/ServerActivityLogContainer';
+import {
+    faBackward,
+    faClock,
+    faDatabase,
+    faEdit,
+    faFolder,
+    faNetworkWired,
+    faPaperclip,
+    faPlayCircle,
+    faTerminal,
+    faUser,
+    faWheelchair,
+} from '@fortawesome/free-solid-svg-icons';
 
 // Each of the router files is already code split out appropriately — so
 // all of the items above will only be loaded in when that router is loaded.
@@ -29,6 +43,7 @@ interface RouteDefinition {
     name: string | undefined;
     component: React.ComponentType;
     exact?: boolean;
+    iconProp?: IconProp;
 }
 
 interface ServerRouteDefinition extends RouteDefinition {
@@ -73,72 +88,84 @@ export default {
             name: 'Console',
             component: ServerConsole,
             exact: true,
+            iconProp: faTerminal,
         },
         {
             path: '/files',
             permission: 'file.*',
             name: 'Files',
             component: FileManagerContainer,
+            iconProp: faFolder,
         },
         {
             path: '/files/:action(edit|new)',
             permission: 'file.*',
             name: undefined,
             component: FileEditContainer,
+            iconProp: faEdit,
         },
         {
             path: '/databases',
             permission: 'database.*',
             name: 'Databases',
             component: DatabasesContainer,
+            iconProp: faDatabase,
         },
         {
             path: '/schedules',
             permission: 'schedule.*',
             name: 'Schedules',
             component: ScheduleContainer,
+            iconProp: faClock,
         },
         {
             path: '/schedules/:id',
             permission: 'schedule.*',
             name: undefined,
             component: ScheduleEditContainer,
+            iconProp: faClock,
         },
         {
             path: '/users',
             permission: 'user.*',
             name: 'Users',
             component: UsersContainer,
+            iconProp: faUser,
         },
         {
             path: '/backups',
             permission: 'backup.*',
             name: 'Backups',
             component: BackupContainer,
+            iconProp: faBackward,
         },
         {
             path: '/network',
             permission: 'allocation.*',
             name: 'Network',
             component: NetworkContainer,
+            iconProp: faNetworkWired,
         },
         {
             path: '/startup',
             permission: 'startup.*',
             name: 'Startup',
             component: StartupContainer,
+            iconProp: faPlayCircle,
         },
         {
             path: '/settings',
             permission: ['settings.*', 'file.sftp'],
             name: 'Settings',
             component: SettingsContainer,
+            iconProp: faWheelchair,
         },
         {
             path: '/activity',
             permission: 'activity.*',
             name: 'Activity',
             component: ServerActivityLogContainer,
+            iconProp: faPaperclip,
         },
     ],
 } as Routes;
