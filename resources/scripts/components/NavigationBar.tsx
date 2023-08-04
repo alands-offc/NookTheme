@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCogs, faLayerGroup, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCogs, faLayerGroup, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { useStoreState } from 'easy-peasy';
 import { ApplicationStore } from '@/state';
 import SearchContainer from '@/components/dashboard/search/SearchContainer';
@@ -32,6 +32,16 @@ const RightNavigation = styled.div`
     }
 `;
 
+const onTriggerNavButton = () => {
+    const sidebar = document.getElementById('sidebar');
+
+    if (sidebar) {
+        sidebar.classList.toggle('active-nav');
+    }
+
+    console.log('triggered');
+};
+
 export default () => {
     const name = useStoreState((state: ApplicationStore) => state.settings.data!.name);
     const rootAdmin = useStoreState((state: ApplicationStore) => state.user.data!.rootAdmin);
@@ -50,6 +60,12 @@ export default () => {
             <SpinnerOverlay visible={isLoggingOut} />
             <div className={'mx-auto w-full flex items-center h-[3.5rem] max-w-[1200px]'}>
                 <div id={'logo'} className={'flex-1'}>
+                    <FontAwesomeIcon
+                        icon={faBars}
+                        className='navbar-button'
+                        onClick={onTriggerNavButton}
+                    ></FontAwesomeIcon>
+
                     <Link
                         to={'/'}
                         className={
@@ -59,6 +75,7 @@ export default () => {
                         {name}
                     </Link>
                 </div>
+
                 <RightNavigation className={'flex h-full items-center justify-center'}>
                     <SearchContainer />
                     <Tooltip placement={'bottom'} content={'Dashboard'}>
