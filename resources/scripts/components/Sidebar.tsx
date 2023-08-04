@@ -8,7 +8,9 @@ type ParentProps = {
 export default ({ children }: Omit<ParentProps, 'render'>) => {
     return (
         <>
-            <div className='sidebar'>{children}</div>
+            <div className='sidebar' id='sidebar'>
+                {children}
+            </div>
         </>
     );
 };
