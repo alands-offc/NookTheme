@@ -8,7 +8,6 @@ import SubNavigation from '@/components/elements/SubNavigation';
 import { useLocation } from 'react-router';
 import Spinner from '@/components/elements/Spinner';
 import routes from '@/routers/routes';
-import Sidebar from '@/components/Sidebar';
 
 export default () => {
     const location = useLocation();
@@ -29,8 +28,6 @@ export default () => {
                     </div>
                 </SubNavigation>
             )}
-
-            <Sidebar />
 
             <TransitionRouter>
                 <React.Suspense fallback={<Spinner centered />}>
