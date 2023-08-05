@@ -6,9 +6,14 @@ import { CSSTransition } from 'react-transition-group';
 import tw from 'twin.macro';
 
 const BarFill = styled.div`
-    ${tw`h-full bg-cyan-400`};
+    ${tw`h-full bg-red-600`};
     transition: 250ms ease-in-out;
-    box-shadow: 0 -2px 10px 2px hsl(178, 78%, 57%);
+    margin-top: 0 !important;
+    box-shadow: 0 -2px 10px 2px hsl(9.090909090909092, 98.29787234042554%, 53.92156862745098%);
+    position: fixed;
+    height: 1px;
+    top: 6vh;
+    z-index: 999999999;
 `;
 
 type Timer = ReturnType<typeof setTimeout>;
