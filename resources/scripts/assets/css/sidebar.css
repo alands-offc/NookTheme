@@ -32,9 +32,11 @@
     padding: 0;
     width: var(--sidebar-size);
     background-color: var(--color-tertiary);
-    height: 100%;
     overflow: auto;
     z-index: 999999;
+    margin-top: 0;
+    top: 6vh;
+    height: 94vh;
 }
 
 .content-container {
@@ -169,4 +171,17 @@ div.content {
 
 .openMenu:hover {
     cursor: pointer;
+}
+
+.topbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+    height: 6vh;
+    overflow-y: hidden;
+}
+
+.nook-container {
+    margin-top: 8vh;
 }
