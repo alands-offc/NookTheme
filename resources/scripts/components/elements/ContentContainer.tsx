@@ -3,6 +3,7 @@ import { breakpoint } from '@/theme';
 import tw from 'twin.macro';
 
 const ContentContainer = styled.div`
+    ${tw`mt-4`}
     ${tw`mx-4`};
 
     ${breakpoint('xl')`
