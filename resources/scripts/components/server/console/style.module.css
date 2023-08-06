@@ -41,7 +41,7 @@
             }
 
             &::-webkit-scrollbar-thumb {
-                @apply bg-gray-900;
+                @apply bg-slate-800;
             }
         }
     }
