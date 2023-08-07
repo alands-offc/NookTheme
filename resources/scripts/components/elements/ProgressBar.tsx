@@ -12,7 +12,7 @@ const BarFill = styled.div`
     box-shadow: 0 -2px 10px 2px hsl(9.090909090909092, 98.29787234042554%, 53.92156862745098%);
     position: fixed;
     height: 1px;
-    top: 6vh;
+    top: 3.5rem;
     z-index: 999999999;
 `;
 
