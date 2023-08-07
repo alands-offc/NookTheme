@@ -59,13 +59,9 @@ export default () => {
         <div className={'bg-neutral-700 shadow-md overflow-x-auto topbar'}>
             <SpinnerOverlay visible={isLoggingOut} />
             <div className={'mx-auto w-full flex items-center h-[3.5rem] max-w-[1200px]'}>
-                <div id={'logo'} className={'flex-1'}>
-                    <FontAwesomeIcon
-                        icon={faBars}
-                        className='navbar-button'
-                        onClick={onTriggerNavButton}
-                    ></FontAwesomeIcon>
+                <FontAwesomeIcon icon={faBars} className='navbar-button' onClick={onTriggerNavButton}></FontAwesomeIcon>
 
+                <div id={'logo'} className={'flex-1'}>
                     <Link
                         to={'/'}
                         className={
