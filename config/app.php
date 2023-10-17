@@ -15,6 +15,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | NookTheme Version
+    |--------------------------------------------------------------------------
+    | This value is set when creating a NookTheme release. You should not
+    | change this value if you are not maintaining your own internal versions.
+    */
+
+    'fork-version' => '1.2.0',
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
     |
