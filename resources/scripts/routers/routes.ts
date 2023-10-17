@@ -17,6 +17,7 @@ import ServerActivityLogContainer from '@/components/server/ServerActivityLogCon
 import {
     faBackward,
     faClock,
+    faCogs,
     faDatabase,
     faEdit,
     faFolder,
@@ -27,7 +28,6 @@ import {
     faPlayCircle,
     faTerminal,
     faUser,
-    faWheelchair,
 } from '@fortawesome/free-solid-svg-icons';
 
 // Each of the router files is already code split out appropriately — so
@@ -164,7 +164,7 @@ export default {
             permission: ['settings.*', 'file.sftp'],
             name: 'Settings',
             component: SettingsContainer,
-            iconProp: faWheelchair,
+            iconProp: faCogs,
         },
         {
             path: '/activity',
