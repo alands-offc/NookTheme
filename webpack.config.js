@@ -151,7 +151,7 @@ module.exports = {
         contentBase: path.join(__dirname, '/public'),
         publicPath: process.env.WEBPACK_PUBLIC_PATH || '/assets/',
         writeToDisk: true,
-        allowedHosts: ['localhost'],
+        disableHostCheck: true,
         headers: {
             'Access-Control-Allow-Origin': '*',
         },
