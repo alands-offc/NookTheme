@@ -44,6 +44,7 @@ You should have received a copy of the GNU General Public License along with Noo
     background-color: var(--color-tertiary);
     overflow: auto;
     z-index: 9999;
+    height: calc(100vh - 3.5rem);
 }
 
 .content-container {
