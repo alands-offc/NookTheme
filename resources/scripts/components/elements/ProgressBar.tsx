@@ -5,15 +5,15 @@ import { randomInt } from '@/helpers';
 import { CSSTransition } from 'react-transition-group';
 import tw from 'twin.macro';
 
-const BarFill = styled.div`
+const BarFill = styled.div<{ style?: { top?: string } }>`
     ${tw`h-full bg-red-600`};
     transition: 250ms ease-in-out;
     margin-top: 0 !important;
     box-shadow: 0 -2px 10px 2px hsl(9.090909090909092, 98.29787234042554%, 53.92156862745098%);
     position: fixed;
-    height: 1px;
-    top: 3.5rem;
-    z-index: 999999999;
+    z-index: 99999;
+    height: 2px;
+    top: ${(props) => props.style?.top || '3.5rem'};
 `;
 
 type Timer = ReturnType<typeof setTimeout>;
