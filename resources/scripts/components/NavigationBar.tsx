@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faCogs, faLayerGroup, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { useStoreState } from 'easy-peasy';
@@ -38,14 +38,22 @@ const onTriggerNavButton = () => {
     if (sidebar) {
         sidebar.classList.toggle('active-nav');
     }
-
-    console.log('triggered');
 };
 
 export default () => {
     const name = useStoreState((state: ApplicationStore) => state.settings.data!.name);
     const rootAdmin = useStoreState((state: ApplicationStore) => state.user.data!.rootAdmin);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const location = useLocation();
+    const [showSidebar, setShowSidebar] = useState(false);
+
+    useEffect(() => {
+        if (location.pathname.startsWith('/server') || location.pathname.startsWith('/account')) {
+            setShowSidebar(true);
+            return;
+        }
+        setShowSidebar(false);
+    }, [location.pathname]);
 
     const onTriggerLogout = () => {
         setIsLoggingOut(true);
@@ -59,7 +67,13 @@ export default () => {
         <div className={'bg-neutral-700 shadow-md overflow-x-auto topbar'}>
             <SpinnerOverlay visible={isLoggingOut} />
             <div className={'mx-auto w-full flex items-center h-[3.5rem] max-w-[1200px]'}>
-                <FontAwesomeIcon icon={faBars} className='navbar-button' onClick={onTriggerNavButton}></FontAwesomeIcon>
+                {showSidebar && (
+                    <FontAwesomeIcon
+                        icon={faBars}
+                        className='navbar-button'
+                        onClick={onTriggerNavButton}
+                    ></FontAwesomeIcon>
+                )}
 
                 <div id={'logo'} className={'flex-1'}>
                     <Link
