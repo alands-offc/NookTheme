@@ -27,7 +27,7 @@ jobs:
         id: docker_meta
         uses: docker/metadata-action@v4
         with:
-          images: ghcr.io/pterodactyl/panel
+          images: ghcr.io/nookure/nooktheme
           flavor: |
             latest=false
           tags: |
