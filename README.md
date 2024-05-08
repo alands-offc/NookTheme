@@ -114,6 +114,16 @@ php artisan up
 * [Community Guides](https://pterodactyl.io/community/about.html)
 * Or, get additional help [via Discord](https://discord.nookure.com/)
 
+## Star History
+
+<a href="https://star-history.com/#Nookure/NookTheme&Timeline">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Nookure/NookTheme&type=Timeline&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Nookure/NookTheme&type=Timeline" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Nookure/NookTheme&type=Timeline" />
+  </picture>
+</a>
+
 ## License
 
 Pterodactyl® Copyright © 2015 - 2023 Dane Everitt and contributors.
