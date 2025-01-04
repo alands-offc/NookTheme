@@ -42,9 +42,9 @@ sudo add-apt-repository ppa:ondrej/php
 sudo apt update
 ```
 
-5. Install PHP 8.2:
+5. Install PHP 8.3:
 ```bash
-sudo apt install -y php8.2
+sudo apt install -y php8.3
 ```
 
 6. Verify the PHP version:
