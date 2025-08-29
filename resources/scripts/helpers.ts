@@ -47,3 +47,12 @@ export function encodePathSegments(path: string): string {
 export function hashToPath(hash: string): string {
     return hash.length > 0 ? decodeURIComponent(hash.substr(1)) : '/';
 }
+export const megabytesToHuman = (megabytes: number): string => {
+    if (megabytes === 0) return '0 B';
+    const k = 1024;
+    const i = Math.floor(Math.log(megabytes * k * k) / Math.log(k));
+    const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+    
+    // Perhitungan dari MB ke unit yang sesuai
+    return `${parseFloat((megabytes / Math.pow(k, i - 2)).toFixed(2))} ${sizes[i]}`;
+};
