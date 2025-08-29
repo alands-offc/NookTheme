@@ -1,33 +1,51 @@
-// resources/scripts/components/dashboard/ServerCard.tsx
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Server } from '@/api/server/getServer';
 import { Link } from 'react-router-dom';
 import tw from 'twin.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faServer, faMemory, faHdd } from '@fortawesome/free-solid-svg-icons';
 import { megabytesToHuman } from '@/helpers';
+import getServerResourceUsage from '@/api/server/getServerResourceUsage';
 
 interface Props {
     server: Server;
 }
 
-// LINGKARAN STATUS DENGAN LOGIKA WARNA YANG DISEMPURNAKAN
 const StatusCircle = ({ status }: { status: string | null }) => {
-    // Tentukan warna berdasarkan status server secara spesifik
-    const color = !status ? tw`bg-neutral-500` // Jika status null (baru load) -> Abu-abu
-        : status === 'running' ? tw`bg-green-500`  // Jika running -> Hijau
-        : status === 'offline' ? tw`bg-red-500`      // Jika offline -> Merah
-        : tw`bg-yellow-500`; // Lainnya (starting/stopping) -> Kuning
+    const color = !status || status === 'starting' || status === 'stopping' ? tw`bg-neutral-500`
+        : status === 'running' ? tw`bg-green-500`
+        : status === 'offline' ? tw`bg-red-500`
+        : tw`bg-yellow-500`;
 
-    return (
-        <div css={[ tw`w-3 h-3 rounded-full`, color ]} />
-    );
+    return <div css={[tw`w-3 h-3 rounded-full`, color]} />;
 };
 
 export default ({ server }: Props) => {
-    // Ambil status server. Mungkin null saat pertama kali render.
-    const status = server.status;
+    const [status, setStatus] = useState<string | null>(server.status);
+
+    useEffect(() => {
+        // PERBAIKAN 1: Ganti server.isSuspended menjadi server.status === 'suspended'
+        if (server.status === 'suspended' || server.isTransferring) {
+            return;
+        }
+
+        const getStatus = () => {
+            getServerResourceUsage(server.uuid)
+                .then(data => setStatus(data.status))
+                .catch(error => {
+                    console.error(`Could not fetch status for server ${server.name}:`, error);
+                    setStatus('offline');
+                });
+        };
+
+        getStatus();
+        const interval = setInterval(getStatus, 30000);
+
+        return () => {
+            clearInterval(interval);
+        };
+      // PERBAIKAN 1 (lagi): Ganti server.isSuspended di dependency array
+    }, [server.uuid, server.status, server.isTransferring]);
 
     return (
         <Link
@@ -56,6 +74,7 @@ export default ({ server }: Props) => {
                 </div>
                 <div css={tw`flex items-center`}>
                     <FontAwesomeIcon icon={faHdd} css={tw`mr-2 text-purple-400`} />
+                    {/* PERBAIKAN 2: Perbaiki typo megabytesTohuman menjadi megabytesToHuman */}
                     <span>{server.limits.disk > 0 ? megabytesToHuman(server.limits.disk) : 'Unlimited'}</span>
                 </div>
             </div>
