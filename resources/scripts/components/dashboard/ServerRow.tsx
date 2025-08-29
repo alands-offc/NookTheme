@@ -78,7 +78,7 @@ export default ({ server, className }: { server: Server, className?: string }) =
             to={`/server/${server.id}`}
             className={className}
             css={tw`
-                block bg-neutral-800 p-4 rounded-lg shadow-md
+                block bg-neutral-700 p-4 rounded-lg shadow-md
                 transition-transform transform duration-200 ease-in-out
                 hover:scale-105 hover:shadow-xl focus:scale-105 focus:shadow-xl
                 flex flex-col
