@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Server } from '@/api/server/getServer';
 import getServers from '@/api/getServers';
-import ServerRow from '@/components/dashboard/ServerRow';
 import Spinner from '@/components/elements/Spinner';
 import PageContentBlock from '@/components/elements/PageContentBlock';
 import useFlash from '@/plugins/useFlash';
@@ -13,6 +12,11 @@ import useSWR from 'swr';
 import { PaginatedResult } from '@/api/http';
 import Pagination from '@/components/elements/Pagination';
 import { useLocation } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import ServerCard from '@/components/dashboard/ServerCard'; // <-- Impor komponen baru
 
 export default () => {
     const { search } = useLocation();
@@ -24,7 +28,7 @@ export default () => {
     const rootAdmin = useStoreState((state) => state.user.data!.rootAdmin);
     const [showOnlyAdmin, setShowOnlyAdmin] = usePersistedState(`${uuid}:show_all_servers`, false);
 
-    const { data: servers, error } = useSWR<PaginatedResult<Server>>(
+    const { data: servers, error, isValidating } = useSWR<PaginatedResult<Server>>(
         ['/api/client/servers', showOnlyAdmin && rootAdmin, page],
         () => getServers({ page, type: showOnlyAdmin && rootAdmin ? 'admin' : undefined })
     );
@@ -37,9 +41,6 @@ export default () => {
     }, [servers?.pagination.currentPage]);
 
     useEffect(() => {
-        // Don't use react-router to handle changing this part of the URL, otherwise it
-        // triggers a needless re-render. We just want to track this in the URL incase the
-        // user refreshes the page.
         window.history.replaceState(null, document.title, `/${page <= 1 ? '' : `?page=${page}`}`);
     }, [page]);
 
@@ -48,12 +49,14 @@ export default () => {
         if (!error) clearFlashes('dashboard');
     }, [error]);
 
+    const isServersEmpty = servers?.items.length === 0;
+
     return (
-        <PageContentBlock className='content-dashboard' title={'Dashboard'} showFlashKey={'dashboard'}>
+        <PageContentBlock className='content-dashboard' title={'Your Servers'} showFlashKey={'dashboard'}>
             {rootAdmin && (
-                <div css={tw`mb-2 flex justify-end items-center`}>
+                <div css={tw`mb-4 flex justify-end items-center`}>
                     <p css={tw`uppercase text-xs text-neutral-400 mr-2`}>
-                        {showOnlyAdmin ? "Showing others' servers" : 'Showing your servers'}
+                        {showOnlyAdmin ? "Showing all servers" : 'Showing your servers'}
                     </p>
                     <Switch
                         name={'show_all_servers'}
@@ -65,21 +68,35 @@ export default () => {
             {!servers ? (
                 <Spinner centered size={'large'} />
             ) : (
-                <Pagination data={servers} onPageSelect={setPage}>
-                    {({ items }) =>
-                        items.length > 0 ? (
-                            items.map((server, index) => (
-                                <ServerRow key={server.uuid} server={server} css={index > 0 ? tw`mt-2` : undefined} />
-                            ))
-                        ) : (
-                            <p css={tw`text-center text-sm text-neutral-400`}>
-                                {showOnlyAdmin
-                                    ? 'There are no other servers to display.'
-                                    : 'There are no servers associated with your account.'}
-                            </p>
-                        )
-                    }
-                </Pagination>
+                <div>
+                    <Pagination data={servers} onPageSelect={setPage}>
+                        {({ items }) =>
+                            items.length > 0 ? (
+                                // ===== BLOK YANG DIPERBARUI ===== //
+                                <div css={tw`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4`}>
+                                    {items.map((server) => (
+                                        <ServerCard key={server.uuid} server={server} />
+                                    ))}
+                                </div>
+                                // ================================ //
+                            ) : (
+                                <div css={tw`p-6 rounded-lg bg-neutral-800 shadow-md`}>
+                                    <p css={tw`text-center text-sm text-neutral-400`}>
+                                        {showOnlyAdmin
+                                            ? 'There are no other servers to display.'
+                                            : 'You dont have any servers yet.'}
+                                    </p>
+                                    <div css={tw`mt-4 text-center`}>
+                                        <Link to={'/servers/new'} css={tw`text-neutral-200 hover:text-neutral-500`}>
+                                            <FontAwesomeIcon icon={faPlusCircle} css={tw`mr-2`} />
+                                            Create New Server
+                                        </Link>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    </Pagination>
+                </div>
             )}
         </PageContentBlock>
     );
