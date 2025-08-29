@@ -1,3 +1,5 @@
+// resources/scripts/components/dashboard/ServerCard.tsx
+
 import React from 'react';
 import { Server } from '@/api/server/getServer';
 import { Link } from 'react-router-dom';
@@ -10,20 +12,21 @@ interface Props {
     server: Server;
 }
 
+// LINGKARAN STATUS DENGAN LOGIKA WARNA YANG DISEMPURNAKAN
 const StatusCircle = ({ status }: { status: string | null }) => {
+    // Tentukan warna berdasarkan status server secara spesifik
+    const color = !status ? tw`bg-neutral-500` // Jika status null (baru load) -> Abu-abu
+        : status === 'running' ? tw`bg-green-500`  // Jika running -> Hijau
+        : status === 'offline' ? tw`bg-red-500`      // Jika offline -> Merah
+        : tw`bg-yellow-500`; // Lainnya (starting/stopping) -> Kuning
+
     return (
-        <div
-            css={[
-                tw`w-3 h-3 rounded-full`,
-                status === 'running' && tw`bg-green-500`,
-                status === 'offline' && tw`bg-red-500`,
-                (status !== 'running' && status !== 'offline') && tw`bg-yellow-500`, // Default untuk starting/stopping
-            ]}
-        />
+        <div css={[ tw`w-3 h-3 rounded-full`, color ]} />
     );
 };
 
 export default ({ server }: Props) => {
+    // Ambil status server. Mungkin null saat pertama kali render.
     const status = server.status;
 
     return (
